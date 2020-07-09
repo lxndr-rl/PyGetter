@@ -61,27 +61,29 @@ def getFile():
         with open(filePath, 'wb') as f:                                     #Crea el archivo si no existe y si existe lo sobreescribe (No debe pasar porque son nombre únicos)
             f.write(mybytes)                                                #Escribe el contenido del archivo
         f.close()                                                           #Cierra el archivo guardado
+        messagebox.showinfo('Guardado', f'Archivo guuardado en: {filePath}')#Muestra el dialogo de alerta
     #END def saveDef
     #START def runDef  (Correr programa en la consola de fondo)
     def runDef():
-        saveDef()
-        exec(mybytes)
+        exec(mybytes)                                                       #Ejecuta el código en la consola
+        messagebox.showinfo('Ejecutando', 'Revisa la consola')              #Muestra una alerta de que el código se está ejecutando
     #END def runDef
     if error=='error':                                                      #Si la id de la solicitud es 'error' el API lo marca como archivo que no existe
-        messagebox.showinfo('404', 'Archivo no encontrado')                 #Muestra el dialogo de alerta
+        messagebox.showerror('404', 'Archivo no encontrado')                 #Muestra el dialogo de alerta
     else:                                                                   #Si encuentra el archivo entonces continúa
         newW = Tk()                                                         #Para la creación de una nueva ventana
         newW.title(autor)                                                   #El título de la ventana es el nombre del autor (Lo provee la API)
-        newW.geometry('1000x700')                                           #El tamaño de la nueva ventana
+        newW.geometry('660x700')                                            #El tamaño de la nueva ventana
         newW.resizable(width=False, height=False)                           #Bloquea que se cambie el tamaño de la nueva ventana
-        code = scrolledtext.ScrolledText(newW,height=70,width=100)          #Se crea un ScrolledText   (Para mostrar el código)
-        code.grid(column=0,row=0)                                           #Se implementa el ScrolledText
+        runbtn = Button(newW, text='Ejecutar', command=runDef)              #Se crea el botón para ejecutar el programa
+        runbtn.grid(column=0,row=0)                                         #Se implementa el botón para ejecutar el programa
+        savebtn = Button(newW, text='Guardar Archivo', command=saveDef)     #Se crea el botón para guardar el programa
+        savebtn.grid(column=0,row=1)                                        #Se implementa el botón para guardar el programa
+        code = scrolledtext.ScrolledText(newW,height=40,width=80)           #Se crea un ScrolledText   (Para mostrar el código)
+        code.grid(column=0,row=2)                                           #Se implementa el ScrolledText
         code.insert(INSERT,mybytes)                                         #Se inserta el contenido del archivo de código
         code.configure(state='disabled')                                    #Se desactiva la modificación de texto en el ScrolledText
-        runbtn = Button(newW, text='Ejecutar', command=runDef)              #Se crea el botón para ejecutar el programa
-        runbtn.grid(column=2,row=0)                                         #Se implementa el botón para ejecutar el programa
-        savebtn = Button(newW, text='Guardar Archivo', command=saveDef)     #Se crea el botón para guardar el programa
-        savebtn.grid(column=1,row=0)                                        #Se implementa el botón para guardar el programa
+        newW.mainloop()
 #END def getFile
 username = os.getlogin()                                                    #Se obtiene el nombre del usuario
 liste = requests.get('https://api.lxndr.live/pygetter/listener.php')        #Se obtiene la lista de archivos que existen en mi API
