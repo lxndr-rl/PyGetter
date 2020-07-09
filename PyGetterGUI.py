@@ -74,7 +74,6 @@ def getFile():
         newW.title(autor)                                                   #El título de la ventana es el nombre del autor (Lo provee la API)
         newW.geometry('1000x700')                                           #El tamaño de la nueva ventana
         newW.resizable(width=False, height=False)                           #Bloquea que se cambie el tamaño de la nueva ventana
-        #newW.iconphoto(False, photo)                                       #Para el ícono de ventana
         code = scrolledtext.ScrolledText(newW,height=70,width=100)          #Se crea un ScrolledText   (Para mostrar el código)
         code.grid(column=0,row=0)                                           #Se implementa el ScrolledText
         code.insert(INSERT,mybytes)                                         #Se inserta el contenido del archivo de código
@@ -102,8 +101,6 @@ window.geometry('500x400')                                                  #El 
 window.resizable(width=False, height=False)                                 #Bloquea que se cambie el tamaño de la ventana
 header = ttk.Frame(window)                                                  #Crea un cuadro en la parte superior
 header.pack()                                                               #Se implementa el cuadro
-#photo = PhotoImage(file = 'icon.png')                                      #Icono a usar para la ventana
-#window.iconphoto(False, photo)                                             #Implementa icono
 scrollable_body = Scrollable(window, width=10)                              #Se crea el cuerpo Scrollable
 
 selection=Label(scrollable_body, text =estruc,font = 'Arial').grid()        #Se escribe dentro del scrollable_body la lista de archivos
